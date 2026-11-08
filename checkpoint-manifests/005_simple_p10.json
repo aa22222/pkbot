@@ -1,0 +1,438 @@
+{
+  "checkpoint": "005_simple_p10",
+  "parent": "004_simple_agent",
+  "status": "tested_experimental_with_timing_failure",
+  "rationale": "Replace pooled training median and candidate potential medians with empirical nearest-rank 10th percentiles; all other strategy and sample settings unchanged.",
+  "source_hashes": {
+    ".dockerignore": "de149150c8b4f9577e6f727e8400b25af3a925351ddeecb9573e3c9e457d6f40",
+    ".gitignore": "05877a7e8aa7c7d8a4314a49e1d64f6286da638ed461947e2f7534b13365f74f",
+    "action_values.py": "c9d66fb1ddaeb6087605b1fd1dad14922b5a1c9a2f2db3894b3c064829031227",
+    "agent.py": "e96f1a62ccfa105e88bd3c79389f318b1d96c3906f68b30310584d3d9006a4df",
+    "baseline-bots/baseline_always_half.py": "d4d2e149586c2504ea3a571d1c40e333e515d83e2e87c4bf9c1c065be86da766",
+    "baseline-bots/baseline_always_pot.py": "a14f718599c01eff6776a8425fcd4002e3298ebd710f81ec6daa6f9a75a8ef47",
+    "baseline-bots/baseline_calling_station.py": "34e0dbc156828775995b90ef3eed6a9dd10292fe217dccfc712f92044e406c97",
+    "baseline-bots/baseline_random.py": "9d91905ad24b7bb23e51271fcf985e69280725c85b7e51e3c598f13bd73abf45",
+    "batch_eval.py": "8e7061e7bd9bd30c241665f3fc7621c3e9282cdd360ce6f78a46267ada20d2f6",
+    "belief.py": "62f65d9fe6aa45ab859f375381ea3c0c457d377f8524039ce60c13e9d0011fdd",
+    "docker/Dockerfile.agent": "53877ce720e26716079f4981588f654ed306fc8c9ecb2ae80615cdf47ea0c263",
+    "docker/Dockerfile.base": "4e43a2e1d5155fd11576934ee97007e617b6cce9b3810b4c0d7c1ec716ec240a",
+    "evaluator.py": "02d784a0cdfe3be0a12dd69de54b322a0d350e5de45a8a98b9c99b7c987cb49e",
+    "game.py": "06829231bf2a285279c42a2ab4228bb4a46e170a6398146c894111c05e3c61a2",
+    "judge_engine.py": "79c7fc238703ab981e162da4a32000afd87361f1844b3d9c04bdf5a395494052",
+    "opponent_model.py": "0b691bd3b2cb9b3717914d7db8d4cf88a90763273cae65070fd7cae78d1f0437",
+    "pair_eval.py": "e6146f145a002f39f0582de8811d79d3496c428a4ee9e38b54cd9069089d362a",
+    "pytest.ini": "e4d06c6d9901a45373f37b3c5f3536fc70f1113c8529725a67565fd8dc40ab70",
+    "requirements-dev.txt": "9e8ccf3465e5d70f9e79cb217072f654a70418ceea8a181ff610e61665d018be",
+    "requirements.txt": "03c319d28499f4d9a3ccd95a24717dbf4acd595cb26ad4d1684ab0c764d6ddb0",
+    "simple_agent.py": "8f6e0af665df344ce8969f5ebc267df09e033007633f18a1b5594da6f3d5bc10",
+    "strategy.py": "51cc03bfe773f8caf77be945b20e2d916cfae99c6dc2ee4f0b80b25a4cfa8e14",
+    "test_agent.py": "165e0497a810cef5acca72eaeeb4951b45dd70d1818417dca2d62edcfc817271",
+    "test_belief.py": "b4dd7e0189ee87c3498e782dddca037012dc88b201370cab2974f7287df66bbb",
+    "test_pair_eval.py": "206f5be1b9d5c02f91f2d644eb4f797f89449774b47f6c198d64950a12d33e25",
+    "test_simple_agent.py": "a05d88f677c210ce848a9beb13f8ad38f2e64a9df43ccbed33a7a7fa423224dd",
+    "test_strategy.py": "c0c5386661b869e1e3148c68f6340d02ba84044d0f72b00802fe596be4393c9d",
+    "tools/analyze_losses.py": "6464231ac143617ad2cecff30bb720ad2de02f938cc4f3f0bb96dde3409d7cc9",
+    "tools/benchmark_pair_eval.py": "4bbafa2c60fbf8c3574ef661b6ae600c9b74fcc08ab73a74a4554d40bbfca5af",
+    "tools/build_preflop.py": "cd4ad94f7066411442e91835e2817e08977a62aa176b90d41e03a4cbe2eae76d",
+    "tools/check_build.sh": "9e7d8f8b0a31fc96a77305c5d1abcf9350110e749e270296b878477686f6bb85",
+    "tools/checkpoints.py": "fedf33dca6008d93ba02734872a8c10dc95979998cd322143d6a040c052a29ca",
+    "tools/play_baselines.py": "82e373626ee451fdc6718b55383be987d43954b63bd9959857821f876c92085f",
+    "tools/smoke_test.py": "75666a4774878e2a327b0d8630b5ee86c64422ca52da5bc257b817818f654c8e"
+  },
+  "asset_hashes": {
+    "data/preflop.npy": "d94ac0793c2e5a1630d0c1e73527bddb069ddacdae5e233fbff692ae02ba1a2f"
+  },
+  "python": "Python 3.13.17",
+  "numpy": "2.5.4",
+  "validation": {
+    "tests_passed": 60,
+    "official_evaluator_audit": {
+      "training_ranks": 512,
+      "candidate_board_ranks": 98
+    },
+    "critic_review": "No blocking correctness issue; both p10 paths verified.",
+    "results_directory": "baseline-results/20261108-042803-594011",
+    "primary_health": {
+      "matches": 12,
+      "hands": 24000,
+      "errors": 0,
+      "skipped_decisions": 117,
+      "timed_out_halves": 1,
+      "forfeited_halves": 0,
+      "max_charged_seconds_per_half": 8.002772,
+      "complete_half_diagnostics": 23,
+      "broad_fallbacks_in_reported_halves": 1,
+      "opponent_errors": 0,
+      "opponent_timed_out_halves": 0
+    },
+    "diagnostic_repeat_directory": "baseline-results/20261108-043203-693342",
+    "diagnostic_repeat_health": {
+      "matches": 2,
+      "hands": 4000,
+      "errors": 0,
+      "skipped_decisions": 0,
+      "timed_out_halves": 0,
+      "forfeited_halves": 0,
+      "max_charged_seconds_per_half": 2.43813,
+      "complete_half_diagnostics": 4,
+      "broad_fallbacks_in_reported_halves": 0,
+      "opponent_errors": 0,
+      "opponent_timed_out_halves": 0
+    },
+    "only_changed_code": [
+      "simple_agent.py",
+      "test_simple_agent.py"
+    ],
+    "original_median_checkpoint_verified_unchanged": true,
+    "matches": [
+      {
+        "opponent": "baseline_always_half",
+        "seed": 137,
+        "verdict": "AGENT2_WIN",
+        "full": {
+          "paired_deals": 1000,
+          "mean_bb_per_paired_deal": -1.9545,
+          "ci_95": [
+            -3.7332794344448677,
+            -0.17572056555513216
+          ]
+        },
+        "probe": {
+          "paired_deals": 100,
+          "mean_bb_per_paired_deal": 0.0,
+          "ci_95": [
+            0.0,
+            0.0
+          ]
+        },
+        "postprobe": {
+          "paired_deals": 900,
+          "mean_bb_per_paired_deal": -2.171666666666667,
+          "ci_95": [
+            -4.147688308892544,
+            -0.19564502444079013
+          ]
+        }
+      },
+      {
+        "opponent": "baseline_always_half",
+        "seed": 149,
+        "verdict": "CHOP",
+        "full": {
+          "paired_deals": 1000,
+          "mean_bb_per_paired_deal": 0.16,
+          "ci_95": [
+            -1.5130210320296675,
+            1.8330210320296674
+          ]
+        },
+        "probe": {
+          "paired_deals": 100,
+          "mean_bb_per_paired_deal": 0.0,
+          "ci_95": [
+            0.0,
+            0.0
+          ]
+        },
+        "postprobe": {
+          "paired_deals": 900,
+          "mean_bb_per_paired_deal": 0.17777777777777778,
+          "ci_95": [
+            -1.681234232527243,
+            2.0367897880827983
+          ]
+        }
+      },
+      {
+        "opponent": "baseline_always_pot",
+        "seed": 137,
+        "verdict": "CHOP",
+        "full": {
+          "paired_deals": 1000,
+          "mean_bb_per_paired_deal": -0.47,
+          "ci_95": [
+            -2.040153736076476,
+            1.100153736076476
+          ]
+        },
+        "probe": {
+          "paired_deals": 100,
+          "mean_bb_per_paired_deal": 0.0,
+          "ci_95": [
+            0.0,
+            0.0
+          ]
+        },
+        "postprobe": {
+          "paired_deals": 900,
+          "mean_bb_per_paired_deal": -0.5222222222222223,
+          "ci_95": [
+            -2.2669011152496275,
+            1.2224566708051832
+          ]
+        }
+      },
+      {
+        "opponent": "baseline_always_pot",
+        "seed": 149,
+        "verdict": "AGENT1_WIN",
+        "full": {
+          "paired_deals": 1000,
+          "mean_bb_per_paired_deal": 1.596,
+          "ci_95": [
+            0.01026631241486764,
+            3.1817336875851323
+          ]
+        },
+        "probe": {
+          "paired_deals": 100,
+          "mean_bb_per_paired_deal": 0.0,
+          "ci_95": [
+            0.0,
+            0.0
+          ]
+        },
+        "postprobe": {
+          "paired_deals": 900,
+          "mean_bb_per_paired_deal": 1.7733333333333334,
+          "ci_95": [
+            0.011690385630900524,
+            3.5349762810357666
+          ]
+        }
+      },
+      {
+        "opponent": "baseline_calling_station",
+        "seed": 137,
+        "verdict": "AGENT1_WIN",
+        "full": {
+          "paired_deals": 1000,
+          "mean_bb_per_paired_deal": 11.275,
+          "ci_95": [
+            10.275004848560304,
+            12.274995151439697
+          ]
+        },
+        "probe": {
+          "paired_deals": 100,
+          "mean_bb_per_paired_deal": 0.0,
+          "ci_95": [
+            0.0,
+            0.0
+          ]
+        },
+        "postprobe": {
+          "paired_deals": 900,
+          "mean_bb_per_paired_deal": 12.527777777777779,
+          "ci_95": [
+            11.447209619832536,
+            13.60834593572302
+          ]
+        }
+      },
+      {
+        "opponent": "baseline_calling_station",
+        "seed": 149,
+        "verdict": "AGENT1_WIN",
+        "full": {
+          "paired_deals": 1000,
+          "mean_bb_per_paired_deal": 11.2835,
+          "ci_95": [
+            10.297520762581168,
+            12.269479237418832
+          ]
+        },
+        "probe": {
+          "paired_deals": 100,
+          "mean_bb_per_paired_deal": 0.0,
+          "ci_95": [
+            0.0,
+            0.0
+          ]
+        },
+        "postprobe": {
+          "paired_deals": 900,
+          "mean_bb_per_paired_deal": 12.537222222222223,
+          "ci_95": [
+            11.472723249602025,
+            13.60172119484242
+          ]
+        }
+      },
+      {
+        "opponent": "baseline_random",
+        "seed": 137,
+        "verdict": "AGENT1_WIN",
+        "full": {
+          "paired_deals": 1000,
+          "mean_bb_per_paired_deal": 5.579,
+          "ci_95": [
+            3.9673908451978055,
+            7.190609154802194
+          ]
+        },
+        "probe": {
+          "paired_deals": 100,
+          "mean_bb_per_paired_deal": 12.535,
+          "ci_95": [
+            6.25671952863113,
+            18.81328047136887
+          ]
+        },
+        "postprobe": {
+          "paired_deals": 900,
+          "mean_bb_per_paired_deal": 4.806111111111111,
+          "ci_95": [
+            3.163230363940234,
+            6.448991858281988
+          ]
+        }
+      },
+      {
+        "opponent": "baseline_random",
+        "seed": 149,
+        "verdict": "AGENT1_WIN",
+        "full": {
+          "paired_deals": 1000,
+          "mean_bb_per_paired_deal": 5.8195,
+          "ci_95": [
+            4.275592618414397,
+            7.363407381585603
+          ]
+        },
+        "probe": {
+          "paired_deals": 100,
+          "mean_bb_per_paired_deal": 14.935,
+          "ci_95": [
+            9.025826548390029,
+            20.844173451609972
+          ]
+        },
+        "postprobe": {
+          "paired_deals": 900,
+          "mean_bb_per_paired_deal": 4.806666666666667,
+          "ci_95": [
+            3.2344023614124366,
+            6.378930971920896
+          ]
+        }
+      },
+      {
+        "opponent": "checkpoint_stageB002",
+        "seed": 137,
+        "verdict": "AGENT2_WIN",
+        "full": {
+          "paired_deals": 1000,
+          "mean_bb_per_paired_deal": -1.7005,
+          "ci_95": [
+            -3.2777546689137456,
+            -0.12324533108625402
+          ]
+        },
+        "probe": {
+          "paired_deals": 100,
+          "mean_bb_per_paired_deal": -7.795,
+          "ci_95": [
+            -12.153123227753298,
+            -3.436876772246701
+          ]
+        },
+        "postprobe": {
+          "paired_deals": 900,
+          "mean_bb_per_paired_deal": -1.0233333333333334,
+          "ci_95": [
+            -2.7025067444128976,
+            0.6558400777462308
+          ]
+        }
+      },
+      {
+        "opponent": "checkpoint_stageB002",
+        "seed": 149,
+        "verdict": "CHOP",
+        "full": {
+          "paired_deals": 1000,
+          "mean_bb_per_paired_deal": -0.284,
+          "ci_95": [
+            -1.7921182961245135,
+            1.2241182961245134
+          ]
+        },
+        "probe": {
+          "paired_deals": 100,
+          "mean_bb_per_paired_deal": -7.27,
+          "ci_95": [
+            -12.072119594470337,
+            -2.4678804055296624
+          ]
+        },
+        "postprobe": {
+          "paired_deals": 900,
+          "mean_bb_per_paired_deal": 0.4922222222222222,
+          "ci_95": [
+            -1.0890209910988613,
+            2.073465435543306
+          ]
+        }
+      },
+      {
+        "opponent": "testpokerbot",
+        "seed": 137,
+        "verdict": "CHOP",
+        "full": {
+          "paired_deals": 1000,
+          "mean_bb_per_paired_deal": -0.968,
+          "ci_95": [
+            -1.975188371764596,
+            0.039188371764596
+          ]
+        },
+        "probe": {
+          "paired_deals": 100,
+          "mean_bb_per_paired_deal": -11.98,
+          "ci_95": [
+            -16.393505488906303,
+            -7.5664945110936985
+          ]
+        },
+        "postprobe": {
+          "paired_deals": 900,
+          "mean_bb_per_paired_deal": 0.25555555555555554,
+          "ci_95": [
+            -0.7192289042906672,
+            1.2303400154017783
+          ]
+        }
+      },
+      {
+        "opponent": "testpokerbot",
+        "seed": 149,
+        "verdict": "AGENT2_WIN",
+        "full": {
+          "paired_deals": 1000,
+          "mean_bb_per_paired_deal": -1.36,
+          "ci_95": [
+            -2.402962311026732,
+            -0.317037688973268
+          ]
+        },
+        "probe": {
+          "paired_deals": 100,
+          "mean_bb_per_paired_deal": -8.415,
+          "ci_95": [
+            -13.54539816168041,
+            -3.2846018383195883
+          ]
+        },
+        "postprobe": {
+          "paired_deals": 900,
+          "mean_bb_per_paired_deal": -0.5761111111111111,
+          "ci_95": [
+            -1.5734871755700985,
+            0.4212649533478763
+          ]
+        }
+      }
+    ]
+  }
+}

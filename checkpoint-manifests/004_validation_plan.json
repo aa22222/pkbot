@@ -1,0 +1,26 @@
+{
+  "candidate_entry": "simple_agent.py",
+  "parent": "003_loss_diagnostics",
+  "seeds": [
+    137,
+    149
+  ],
+  "deals_per_half": 1000,
+  "probe_hands": 100,
+  "opponents": [
+    "baseline_always_half",
+    "baseline_always_pot",
+    "baseline_calling_station",
+    "baseline_random",
+    "testpokerbot",
+    "checkpoint_stageB002"
+  ],
+  "report": [
+    "full duplicate result",
+    "probe phase indices0..99",
+    "postprobe phase100..999",
+    "errors/timeouts/skips/chargedtime",
+    "learned cutoff and number of revealed hands"
+  ],
+  "recorded_before_candidate_results": true
+}

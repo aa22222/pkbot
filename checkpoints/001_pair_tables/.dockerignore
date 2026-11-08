@@ -1,0 +1,8 @@
+.git
+external-bots
+baseline-results
+checkpoints
+checkpoint-manifests
+**/__pycache__
+.pytest_cache
+validation_*.json

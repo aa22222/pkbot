@@ -1,0 +1,5 @@
+external-bots/
+baseline-results/
+external-bots/checkpoint_*/
+__pycache__/
+.pytest_cache/

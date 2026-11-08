@@ -1,5 +1,36 @@
 # Short Deck PLO5 Bot Tournament: Participant Bundle
 
+## Current bot implementation
+
+`agent.py` delegates to `strategy.py`. The strategy uses:
+
+- `batch_eval.py`: NumPy evaluation with the official short-deck categories and exact 2+3 Omaha construction.
+- `pair_eval.py`: exact fixed-board pair tables, a small board cache, and an offline uniform river oracle over all 65,780 legal opponent holdings. Runtime table construction is restricted to batches large enough to justify its setup cost.
+- `data/preflop.npy`: offline equity estimates for all 376,992 starting hands, pooled over suit equivalence. Rebuild with `python tools/build_preflop.py --samples 64`; this is an offline task, not server startup work.
+- `opponent_model.py`: opportunity-based fold/call/raise counts, with preflop/postflop and price contexts backed by pooled counts. Both an independent-action hypothesis and a strength-selective hypothesis remain possible. Showdowns update their mixture using a correction for the observed action sequence.
+- `belief.py`: retains concrete opponent holdings and raw posterior weights through the hand. Each past action has frozen model context; new board cards remove impossible holdings. Reserve mode samples from the retained range, and refreshes replay the frozen history on a new uniform proposal.
+- `action_values.py`: compare legal actions using shared Monte Carlo outcomes, including one opponent response and our fold/call response to a reraise. Response decisions use the whole conditional range, never the particular hidden hand in a sample.
+
+The model conditions calling equity on observed betting history. Exact legal raise amounts, caps and all-ins come from a public-state betting implementation tested against `game.py`. Sampling and all learned state reset between halves.
+
+Important limits: later streets are check-down leaves, not a complete poker solver. Historical likelihoods use deterministic preflop equity or postflop made-hand scores; current action predictions can use four independent runouts. This means historical filtering does not explicitly rank draws. The posterior has finite holding coverage, and decision weights still include the existing low-sample reliability blend. Emergency mode retains the range and reduces nonriver evaluations to at most 16 sampled holdings; rivers use all retained holdings. An extra nonriver estimate redraws runouts for the existing holdings rather than doubling independent holding coverage. Action frequencies have broad price buckets rather than a continuous price model.
+
+Run `python -m pytest -q` for evaluator, opponent-model, betting-accounting and server tests. Run `python tools/play_baselines.py --deals 1000 --seeds 31 43` for duplicate matches. The runner also discovers local clones under `external-bots/*/agent.py`; `--bots testpokerbot` selects one. Set `BOT_DIAGNOSTICS=1` to write sample counts, effective sample sizes and internal time to each agent log. Match JSON files and server logs go under `baseline-results/`.
+
+The previous implementation is preserved locally at `external-bots/previous_bot` for direct comparison. External clones and match artifacts are excluded from the submission image. Docker validation still requires Docker via `tools/check_build.sh`.
+
+`simple_agent.py` is a separate experimental probe bot. During the first 100 hands of each half it chooses the largest legal raise, otherwise calls/checks. For each opponent holding revealed in those hands, it simulates 256 boards from preflop and pools the resulting final hand ranks into one cutoff: the empirical 25th percentile. It uses the observed nearest-rank score at zero-based index `ceil(0.25*n)-1` (clamped to 0), without interpolating packed rank integers; with 16 observations this is the fourth-lowest score. Later, it compares candidate holdings' p25 possible final ranks with that same cutoff on each observed raising street. It uses 16 board completions per candidate feature, exact river ranks, and an adaptive number of candidate holdings. Action values use independent payoff boards, with the opponent folding below the cutoff and calling above it; subsequent streets are check-down estimates. No revealed probe holdings means a uniform range with an all-call response model.
+
+Run the experiment against the bundled baselines and cloned bot with:
+
+```powershell
+python tools/play_baselines.py --agent simple_agent.py --deals 1000 --seeds 137 149 --bots baseline_always_half baseline_always_pot baseline_calling_station baseline_random testpokerbot
+```
+
+The runner saves per-half cutoff and sampling diagnostics in each `agent.log`. The default runner and tournament entry point still use `agent.py`.
+
+The [improvement specification](BOT_IMPROVEMENT_SPEC.md) explains the next stages and their acceptance criteria. Luna implements each stage; primary review, tests, and duplicate comparisons determine whether it is kept. Immutable code-only snapshots live in `checkpoints/`, with hashes and results separately in `checkpoint-manifests/`. To run one, use `python tools/checkpoints.py stage 001_pair_tables --destination external-bots/checkpoint_example`; staging verifies the source and shared preflop asset hashes. Checkpoints and match reports are excluded from the submitted image.
+
 Your bot is **one file, `agent.py`**. It is a complete FastAPI HTTP web server. You edit one marked section, and the tournament runs the file as-is.
 
 ## Files

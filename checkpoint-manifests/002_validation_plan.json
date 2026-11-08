@@ -1,0 +1,33 @@
+{
+  "candidate": "Stage B range-preserving reserve (checkpoint number pending final review)",
+  "seeds": [
+    107,
+    109
+  ],
+  "deals_per_half": 1000,
+  "opponents": [
+    "baseline_always_half",
+    "baseline_always_pot",
+    "baseline_calling_station",
+    "baseline_random",
+    "previous_bot",
+    "testpokerbot",
+    "checkpoint_baseline000",
+    "checkpoint_stageA001"
+  ],
+  "parent_against_fixed_opponent": {
+    "checkpoint": "001_pair_tables",
+    "opponent": "testpokerbot",
+    "seeds": [
+      107,
+      109
+    ]
+  },
+  "gates": [
+    "Independent tests and review",
+    "Zero errors, forfeits, time-bank exhaustion or skipped decisions",
+    "Compare every selected opponent without cherry-picking",
+    "Report judge intervals and per-seed paired change; no unsupported claim of broad superiority"
+  ],
+  "recorded_before_candidate_results": true
+}

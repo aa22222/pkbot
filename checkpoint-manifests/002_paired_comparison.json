@@ -1,0 +1,25 @@
+{
+  "comparisons": [
+    {
+      "seed": 107,
+      "parent_bb": -2.1575,
+      "candidate_bb": -0.741,
+      "difference_bb": 1.4165,
+      "approx_ci": [
+        0.20157268357790703,
+        2.6314273164220934
+      ]
+    },
+    {
+      "seed": 109,
+      "parent_bb": -1.979,
+      "candidate_bb": -2.622,
+      "difference_bb": -0.643,
+      "approx_ci": [
+        -1.8822297491154305,
+        0.5962297491154305
+      ]
+    }
+  ],
+  "interpretation": "Per-deal paired confidence intervals are approximate: learning and shared time budgets create cross-deal dependence. Two seeds do not establish broad playing-strength improvement."
+}

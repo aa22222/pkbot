@@ -1,0 +1,33 @@
+{
+  "candidate_entry": "simple_agent.py",
+  "parent": "004_simple_agent",
+  "seeds": [
+    137,
+    149
+  ],
+  "deals_per_half": 1000,
+  "probe_hands": 100,
+  "opponents": [
+    "baseline_always_half",
+    "baseline_always_pot",
+    "baseline_calling_station",
+    "baseline_random",
+    "testpokerbot",
+    "checkpoint_stageB002"
+  ],
+  "report": [
+    "full duplicate result",
+    "probe phase indices0..99",
+    "postprobe phase100..999",
+    "errors/timeouts/skips/chargedtime",
+    "learned cutoff and number of revealed hands"
+  ],
+  "recorded_before_candidate_results": true,
+  "rank_percentile": 10,
+  "percentile_convention": "Empirical nearest rank: ceil(0.10*n)-1, zero-based; no interpolation of packed scores.",
+  "percentile_applies_to": [
+    "pooled training cutoff",
+    "candidate holding potential feature"
+  ],
+  "comparison_results": "baseline-results/20261108-041753-331395/simple_agent_report.json"
+}
